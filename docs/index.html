@@ -49,7 +49,7 @@
 
 <h2 align="middle">Overview</h2>
 <p>
-    YOUR RESPONSE GOES HERE
+   TEXT HERE
 </p>
 <br>
 
@@ -63,7 +63,9 @@
   Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    The de Casteljau algorithm gives us a set of cascading coefficients which eventually allows us to find a set of associated control points. Continual recursive interplation of these control points allows us to finally find a point which lies on the Bezier curve.
+    In order to implement the recursive step for the algorithm here, I implemented the evaluateStep function. This function takes in a vector of points. Then, I iterate through each of these points until I reach the second to last point and perform a linear interpolation using each point and the next point in the vector at the parameter t. This looks like multiplying the point by 1-t and adding that to the next point multiplied by t.
+    Each calculated point at the next subdivision level is pushed to a new Vector2D which is then returned.
 </p>
 <br>
 
@@ -75,10 +77,10 @@
     YOUR RESPONSE GOES HERE
 </p>
 <!-- Example of including a single figure -->
-<div align="middle">
-  <img src="images/your_file.png" align="middle" width="50%">
-</div>
-<br>
+<!--<div align="middle">-->
+<!--  <img src="images/your_file.png" align="middle" width="50%">-->
+<!--</div>-->
+<!--<br>-->
 
 <b>
   Show screenshots of each step / level of the evaluation from the original control points down to the final evaluated point. Press <kbd>E</kbd> to step through. Toggle <kbd>C</kbd> to show the completed Bezier curve as well.
@@ -88,29 +90,29 @@
   <table style="width:100%">
     <tr align="center">
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
+        <img src="images/Screenshot%202024-03-02%20at%2011.51.41%E2%80%AFPM.png" align="middle" width="400px"/>
         <figcaption>Level 0</figcaption>
       </td>
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
+        <img src="images/Screenshot%202024-03-02%20at%2011.51.48%E2%80%AFPM.png" align="middle" width="400px"/>
         <figcaption>Level 1</figcaption>
       </td>
     </tr>
     <br>
     <tr align="center">
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
+        <img src="images/Screenshot%202024-03-02%20at%2011.52.01%E2%80%AFPM.png" align="middle" width="400px"/>
         <figcaption>Level 2</figcaption>
       </td>
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
+        <img src="images/Screenshot%202024-03-02%20at%2011.52.09%E2%80%AFPM.png" align="middle" width="400px"/>
         <figcaption>Level 3</figcaption>
       </td>
     </tr>
     <br>
     <tr align="center">
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
+        <img src="images/Screenshot%202024-03-02%20at%2011.52.28%E2%80%AFPM.png" align="middle" width="400px"/>
         <figcaption>Level 4</figcaption>
       </td>
     </tr>
@@ -122,9 +124,14 @@
 <b>
   Show a screenshot of a slightly different Bezier curve by moving the original control points around and modifying the parameter \(t\) via mouse scrolling.
 </b>
-<p>
-    YOUR RESPONSE GOES HERE
-</p>  
+    <div align="middle">
+        <img src="images/img.png" align="middle" width="50%">
+    </div>
+    <br>
+
+    <p>
+    Here is a slighty different Bezier curve. I have adjusted the original control points and have scrolled to adjust the t parameter so that the final point is at a different spot along the bezier curve.
+</p>
 <br>
 
 
