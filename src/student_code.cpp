@@ -35,8 +35,13 @@ namespace CGL
    */
   std::vector<Vector3D> BezierPatch::evaluateStep(std::vector<Vector3D> const &points, double t) const
   {
-    // TODO Part 2.
-    return std::vector<Vector3D>();
+      vector<Vector3D> fin = std::vector<Vector3D>();
+      for (int i = 0; i < points.size() - 1; i ++) {
+          fin.push_back((1-t)*points[i]+ (t* points[i+1]));
+      }
+
+      return fin;
+//    return std::vector<Vector3D>();
   }
 
   /**
@@ -49,7 +54,12 @@ namespace CGL
   Vector3D BezierPatch::evaluate1D(std::vector<Vector3D> const &points, double t) const
   {
     // TODO Part 2.
-    return Vector3D();
+    vector<Vector3D> inter = evaluateStep(points, t);
+    if (points.size() > 1) {
+        vector<Vector3D> inter = evaluateStep(inter, t);
+    }
+    Vector3D fin = inter.at(0);
+    return fin;
   }
 
   /**
