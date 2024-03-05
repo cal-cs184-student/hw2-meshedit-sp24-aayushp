@@ -41,7 +41,7 @@
 
 <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2018</h1>
 <h1 align="middle">Project 2: Mesh Edit</h1>
-<h2 align="middle">YOUR NAME</h2>
+<h2 align="middle">Aayush Patel</h2>
 
 <br><br>
 
@@ -140,7 +140,8 @@
   Briefly explain how de Casteljau algorithm extends to Bezier surfaces and how you implemented it in order to evaluate Bezier surfaces.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    The de Casteljau algorithm extends to Bezier surfaces since we can treat 3d surfaces as consituted by 2d Bezier curves. As such, we can perform the algorithm on the points selected from these constitutive curves.
+    As such, in order to implement it, I performed similar steps to part one for each row of points representing a curve in the nxn grid using the u vector. After this, I perform another set of evaluations on the vector resulting from evaluation of each of the n rows to yield a final point in accordance with the algorithm.
 </p>
 <br>
 
@@ -149,7 +150,9 @@
   Show a screenshot of bez/teapot.bez (not .dae) evaluated by your implementation.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <div align="middle">
+        <img src="images/img_1.png" align="middle" width="50%">
+    </div>
 </p>
 <br>
 
