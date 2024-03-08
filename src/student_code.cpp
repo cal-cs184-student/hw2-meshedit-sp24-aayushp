@@ -148,7 +148,114 @@ namespace CGL
   {
     // TODO Part 4.
     // This method should flip the given edge and return an iterator to the flipped edge.
-    return EdgeIter();
+//      HalfedgeIter h0 = e0->halfedge();
+//      HalfedgeIter h1 = h0->next();
+//      HalfedgeIter h2 = h1->next();
+//      HalfedgeIter h3 = h0->twin();
+//      HalfedgeIter h4 = h3->next();
+//      HalfedgeIter h5 = h4->next();
+//      HalfedgeIter h6 = h1->twin();
+//      HalfedgeIter h7 = h2->twin();
+//      HalfedgeIter h8 = h4->twin();
+//      HalfedgeIter h9 = h5->twin();
+
+    if (!e0->isBoundary()) {
+
+        HalfedgeIter h0 = e0->halfedge();
+        HalfedgeIter h1 = h0->next();
+        HalfedgeIter h2 = h1->next();
+        HalfedgeIter h3 = h0->twin();
+        HalfedgeIter h4 = h3->next();
+        HalfedgeIter h5 = h4->next();
+        HalfedgeIter h6 = h1->twin();
+        HalfedgeIter h7 = h2->twin();
+        HalfedgeIter h8 = h4->twin();
+        HalfedgeIter h9 = h5->twin();
+
+        VertexIter v0 = h0->vertex();
+        VertexIter v1 = h3->vertex();
+        VertexIter v2 = h2->vertex();
+        VertexIter v3 = h5->vertex();
+
+        EdgeIter e1 = h1->edge();
+        EdgeIter e2 = h2->edge();
+        EdgeIter e3 = h4->edge();
+        EdgeIter e4 = h5->edge();
+
+        FaceIter f0 = h0->face();
+        FaceIter f1 = h3->face();
+
+        h0->next() = h1;
+        h0->twin() = h3;
+        h0->edge() = e0;
+        h0->vertex() = v3;
+        h0->face() = f0;
+
+        h1->next() = h2;
+        h1->twin() = h7;
+        h1->vertex() = v2;
+        h1->edge() = e2;
+        h1->face() = f0;
+
+        h2->next() = h0;
+        h2->twin() = h8;
+        h2->vertex() = v0;
+        h2->edge() = e3;
+        h2->face() = f0;
+
+        h3->next() = h4;
+        h3->twin() = h0;
+        h3->vertex() = v2;
+        h3->edge() = e0;
+        h3->face() = f1;
+
+        h4->next() = h5;
+        h4->twin() = h9;
+        h4->vertex() = v3;
+        h4->edge() = e4;
+        h4->face() = f1;
+
+        h5->next() = h3;
+        h5->twin() = h6;
+        h5->vertex() = v1;
+        h5->edge() = e1;
+        h5->face() = f1;
+
+        h6->next() = h6->next();
+        h6->twin() = h5;
+        h6->vertex() = v2;
+        h6->edge() = e1;
+        h6->face() = h6->face();
+
+        h7->next() = h7->next();
+        h7->twin() = h1;
+        h7->vertex() = v0;
+        h7->edge() = e2;
+        h7->face() = h7->face();
+
+        h8->next() = h8->next();
+        h8->twin() = h2;
+        h8->vertex() = v3;
+        h8->edge() = e3;
+        h8->face() = h8->face();
+
+        h9->next() = h9->next();
+        h9->twin() = h4;
+        h9->vertex() = v1;
+        h9->edge() = e4;
+        h9->face() = h9->face();
+
+        e0->halfedge() = h0;
+        e1->halfedge() = h5;
+        e2->halfedge() = h1;
+        e3->halfedge() = h2;
+        e4->halfedge() = h4;
+
+        f1->halfedge() = h0;
+        f1->halfedge() = h3;
+
+    }
+    return e0;
   }
 
   VertexIter HalfedgeMesh::splitEdge( EdgeIter e0 )
