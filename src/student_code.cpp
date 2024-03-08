@@ -94,7 +94,54 @@ namespace CGL
     // Returns an approximate unit normal at this vertex, computed by
     // taking the area-weighted average of the normals of neighboring
     // triangles, then normalizing.
-    return Vector3D();
+    Vector3D fin = Vector3D();
+    vector<Vector3D> vertices = vector<Vector3D>();
+//    Vertex v = this;
+    HalfedgeCIter h = this->halfedge();      // get the outgoing half-edge of the vertex
+        do {
+            HalfedgeCIter h_twin = h->twin(); // get the opposite half-edge
+            VertexCIter v = h_twin->vertex(); // vertex is the 'source' of the half-edge, so
+            // h->vertex() is v, whereas h_twin->vertex()
+            // is the neighboring vertex
+//            cout << v->position << endl;      // print the vertex position
+            vertices.push_back(v->position); // add vertices to the vector;
+            h = h_twin->next();               // move to the next outgoing half-edge of the vertex
+        } while(h != this->halfedge());          // keep going until we are back where we were
+    //for each half edge incident to the position
+        // get next half edge until you reach the first half edge. Use the last iterated half edge and the first half
+        //edge to find cross product (save the incident half edge, and then just get the second to last one) -- that is the normal
+        // also as doing this, get list of vertices -- then calculate area
+        Vector3D initial = vertices.at(0);
+        Vector3D normal_sum = Vector3D();
+        for (int i = 0; i < vertices.size(); i++) {
+            if (i != vertices.size()-1){
+                Vector3D vector_1 = vertices.at(i) -this->position;
+                Vector3D vector_2 = this->position -  vertices.at(i+1);
+                Vector3D cp = cross(vector_1, vector_2);
+                normal_sum += cp;
+            }
+            else {
+                Vector3D vector_1 = vertices.at(i) -this->position;
+                Vector3D vector_2 = this-> position - initial;
+                Vector3D cp = cross(vector_1, vector_2);
+                normal_sum+= cp;
+            }
+        }
+        fin = normal_sum/ normal_sum.norm();
+
+
+//    void printNeighbourPositions(VertexCIter v) {
+//        HalfEdgeCIter h = v->halfedge();      // get the outgoing half-edge of the vertex
+//        do {
+//            HalfEdgeCIter h_twin = h->twin(); // get the opposite half-edge
+//            VertexCIter v = h_twin->vertex(); // vertex is the 'source' of the half-edge, so
+//            // h->vertex() is v, whereas h_twin->vertex()
+//            // is the neighboring vertex
+//            cout << v->position << endl;      // print the vertex position
+//            h = h_twin->next();               // move to the next outgoing half-edge of the vertex
+//        } while(h != v->halfedge());          // keep going until we are back where we were
+//    }
+    return fin;
   }
 
   EdgeIter HalfedgeMesh::flipEdge( EdgeIter e0 )
