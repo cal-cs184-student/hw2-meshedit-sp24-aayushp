@@ -249,7 +249,7 @@ namespace CGL
         v1->halfedge() = h5;
         v2->halfedge() = h3;
         v3->halfedge() = h0;
-        
+
         e0->halfedge() = h0;
         e1->halfedge() = h5;
         e2->halfedge() = h1;
@@ -311,7 +311,7 @@ namespace CGL
 
 
         //new vertex position
-        v4->position = (v1->position - v0->position) + v0->position;
+        v4->position = (v1->position + v0->position) / 2;
 
         h0->next() = h1;
         h0->twin() = h3;
@@ -335,10 +335,106 @@ namespace CGL
         h3->twin() = h0;
         h3->edge() = e0;
         h3->vertex() = v4;
+        h3->face() = f1;
 
+        h4->next() = h5;
+        h4->twin() = h8;
+        h4->edge() = e3;
+        h4->vertex() = v0;
+        h4->face() = f1;
 
+        h5->next() = h3;
+        h5->twin() = h10;
+        h5->edge() = e6;
+        h5->vertex() = v3;
+        h5->face() = f1;
+
+        h6->next() = h6->next();
+        h6->twin() = h14;
+        h6->vertex() = v2;
+        h6->edge() = e1;
+        h6->face() = h6->face();
+
+        h7->next() = h7->next();
+        h7->twin() = h2;
+        h7->vertex() = v0;
+        h7->edge() = e2;
+        h7->face() = h7->face();
+
+        h8->next() = h8->next();
+        h8->twin() = h4;
+        h8->vertex() = v3;
+        h8->edge() = e3;
+        h8->face() = h8->face();
+
+        h9->next() = h9->next();
+        h9->twin() = h11;
+        h9->vertex() = v1;
+        h9->edge() = e4;
+        h9->face() = h9->face();
+
+        h10->next() = h11;
+        h10->twin() = h5;
+        h10->vertex() = v4;
+        h10->edge() = e6;
+        h10->face() = f2;
+
+        h11->next() = h12;
+        h11->twin() = h9;
+        h11->vertex() = v3;
+        h11->edge() = e4;
+        h11->face() = f2;
+
+        h12->next() = h10;
+        h12->twin() = h13;
+        h12->vertex() = v1;
+        h12->edge() = e7;
+        h12->face() = f2;
+
+        h13->next() = h14;
+        h13->twin() = h12;
+        h13->vertex() = v4;
+        h13->edge() = e7;
+        h13->face() = f3;
+
+        h14->next() = h15;
+        h14->twin() = h6;
+        h14->vertex() = v1;
+        h14->edge() = e1;
+        h14->face() = f3;
+
+        h15->next() = h13;
+        h15->twin() = h1;
+        h15->vertex() = v2;
+        h15->edge() = e5;
+        h15->face() = f3;
+
+        v0->halfedge() = h4;
+        v1->halfedge() = h14;
+        v2->halfedge() = h2;
+        v3->halfedge() = h5;
+        v4->halfedge() = h3;
+
+        e0->halfedge() = h0;
+        e1->halfedge() = h14;
+        e2->halfedge() = h2;
+        e3->halfedge() = h4;
+        e4->halfedge() = h11;
+        e5->halfedge() = h15;
+        e6->halfedge() = h10;
+        e7->halfedge() = h12;
+
+        f0->halfedge() = h0;
+        f1->halfedge() = h3;
+        f2->halfedge() = h10;
+        f3->halfedge() = h13;
+
+//        CHECK_CLOSED
+
+        return v4;
+    } else {
+        return VertexIter ();
     }
-    return VertexIter();
   }
 
 

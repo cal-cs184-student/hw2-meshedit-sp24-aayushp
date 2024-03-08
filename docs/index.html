@@ -247,7 +247,15 @@
   Briefly explain how you implemented the edge split operation and describe any interesting implementation / debugging tricks you have used.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    I implemented the edge split operation in much the same way as I implemented edge flips. I drew a diagrams representing a simple mesh with two triangles, then another diagram representing the initial mesh after a split.
+    This is usually generalizable. I then assigned each element from the original mesh to a variable, all while initializing the necessary new elements.
+    These new elements were 1 new vertex, 3 new edges, 6 new half edges, and 2 new faces. I also assigned the position of the new vertex to the average of the two endpoints of the given edge.
+    I then reassigned each variable in accordance with the second diagram.
+
+    I first had to debug an issue where splitting an edge did nothing due to a miscalculated average position. I iterated through the function once, realizing that the assignments were correct, but the formula for the average where I subtracted one edge from the other and then added one edge back made no sense, and resulted in a vertex well outside the bounds
+    of the original triangle, which is why I saw no difference when I attempted to split an edge. I then changed this to the average position of the two edge vertices, which fixed the issue.
+
+    I then had to debug an issue where splitting one edge then splitting another edge that is just below the edge parallel and to the right of the original split edge resulted in a black area to the left of the original split. In order to fix the issue, I carefully redrew my diagram and then went line by line in my code to make sure that all the assignments were appropriate. I found that one of my half edges was assigned an incorrect vertex. Assigning it correctly fixed the issue.
 </p>
 <br>
 
@@ -256,7 +264,23 @@
     Show screenshots of a mesh before and after some edge splits. 
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <p>
+    <div align="middle">
+        <table style="width:100%">
+            <tr align="center">
+                <td>
+                    <img src="images/img_3.png" align="middle" width="400px"/>
+                    <figcaption>Teapot before edge splits</figcaption>
+                </td>
+                <td>
+                    <img src="images/img_5.png" align="middle" width="400px"/>
+                    <figcaption>Teapot after some edge splits</figcaption>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    </p>
 </p>
 <br>
 
@@ -265,7 +289,23 @@
     Show screenshots of a mesh before and after a combination of both edge splits and edge flips.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <p>
+    <div align="middle">
+        <table style="width:100%">
+            <tr align="center">
+                <td>
+                    <img src="images/img_3.png" align="middle" width="400px"/>
+                    <figcaption>Teapot before edge splits and edge flips</figcaption>
+                </td>
+                <td>
+                    <img src="images/img_6.png" align="middle" width="400px"/>
+                    <figcaption>Teapot after a combination of edge splits and edge flips</figcaption>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    </p>
 </p>
 <br>
 
@@ -274,7 +314,17 @@
     Write about your eventful debugging journey, if you have experienced one.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    I had two bugs I had to resolve.
+
+    I first had to debug an issue where splitting an edge did nothing due to a miscalculated average position. I iterated through the function once, realizing that the assignments were correct, but the formula for the averagee where I subtracted one edge from the other and then added one edge back made no sense, and resulted in a vertex well outside the bounds
+    of the original triangle, which is why I saw no difference when I attempted to split an edge. I then changed this to the average position of the two edge vertices, which fixed the issue.
+
+    I then had to debug a second issue where splitting one edge then splitting another edge
+    that is just below the edge parallel and to the right of the original split edge resulted
+    in a black area to the left of the original split. In order to fix the issue, I carefully
+    redrew my diagram and then went line by line in my code to make sure that all the
+    assignments were appropriate. I found that one of my half edges was assigned an incorrect vertex.
+    Assigning it correctly fixed the issue.
 </p>
 <br>
 
@@ -283,7 +333,7 @@
     If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    N/A
 </p>
 <br>
 
