@@ -165,7 +165,11 @@
   Briefly explain how you implemented the area-weighted vertex normals.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    First, for any particular vertex, I iterated through all the neighboring vertices and appended them to a vector.
+    After doing this, I iterated through each vertex in the vector, finding the difference vectors between them and the original vector.
+    Any adjacent two of these vertices will have difference vectors which are sides of a triangle, meaning I can find the cross product of them to find the normal for the triangle area.
+    I do this for every set of two vertices, continually adding them to a sum. I then divide this sum by its normal to find the area-weighted vertex normal.
+
 </p>
 <br>
 
@@ -174,7 +178,21 @@
   Show screenshots of dae/teapot.dae (not .bez) comparing teapot shading with and without vertex normals. Use <kbd>Q</kbd> to toggle default flat shading and Phong shading.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <div align="middle">
+        <table style="width:100%">
+            <tr align="center">
+                <td>
+                    <img src="images/img_2.png" align="middle" width="400px"/>
+                    <figcaption>Teapot shading without vertex normals</figcaption>
+                </td>
+                <td>
+                    <img src="images/img_3.png" align="middle" width="400px"/>
+                    <figcaption>Teapot shading with vertex normals</figcaption>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
 </p>
 <br>
 
