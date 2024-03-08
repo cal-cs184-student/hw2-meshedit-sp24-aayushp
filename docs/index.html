@@ -202,7 +202,8 @@
   Briefly explain how you implemented the edge flip operation and describe any interesting implementation / debugging tricks you have used.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    In order to implement the operation, I first assigned a new variable to each each meshelement in a simple mesh diagram connecting two triangles. This diagram can be extrapolated to nearly all mesh elements.
+    Then I carefully listed the reassignments which would occur if an edge was flipped. I then reassigned each variable accordingly. All of this happens only if the edge is not on a boundary. If it is on a boundary, the function returns the input edge immediately.
 </p>
 <br>
 
@@ -211,7 +212,23 @@
   Show screenshots of the teapot before and after some edge flips.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <p>
+    <div align="middle">
+        <table style="width:100%">
+            <tr align="center">
+                <td>
+                    <img src="images/img_2.png" align="middle" width="400px"/>
+                    <figcaption>Teapot before edge flips</figcaption>
+                </td>
+                <td>
+                    <img src="images/img_4.png" align="middle" width="400px"/>
+                    <figcaption>Teapot after some edge flips</figcaption>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    </p>
 </p>
 <br>
 
@@ -220,7 +237,7 @@
     Write about your eventful debugging journey, if you have experienced one.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    I did not have to debug anything for this function. Careful planning beforehand ensured that my initial implementation was the correct one.
 </p>
 <br>
 
