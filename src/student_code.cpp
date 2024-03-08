@@ -245,6 +245,11 @@ namespace CGL
         h9->edge() = e4;
         h9->face() = h9->face();
 
+        v0->halfedge() = h2;
+        v1->halfedge() = h5;
+        v2->halfedge() = h3;
+        v3->halfedge() = h0;
+        
         e0->halfedge() = h0;
         e1->halfedge() = h5;
         e2->halfedge() = h1;
@@ -263,6 +268,76 @@ namespace CGL
     // TODO Part 5.
     // This method should split the given edge and return an iterator to the newly inserted vertex.
     // The halfedge of this vertex should point along the edge that was split, rather than the new edges.
+    if (!e0->isBoundary()) {
+        HalfedgeIter h0 = e0->halfedge();
+        HalfedgeIter h1 = h0->next();
+        HalfedgeIter h2 = h1->next();
+        HalfedgeIter h3 = h0->twin();
+        HalfedgeIter h4 = h3->next();
+        HalfedgeIter h5 = h4->next();
+        HalfedgeIter h6 = h1->twin();
+        HalfedgeIter h7 = h2->twin();
+        HalfedgeIter h8 = h4->twin();
+        HalfedgeIter h9 = h5->twin();
+
+        VertexIter v0 = h0->vertex();
+        VertexIter v1 = h3->vertex();
+        VertexIter v2 = h2->vertex();
+        VertexIter v3 = h5->vertex();
+
+        EdgeIter e1 = h1->edge();
+        EdgeIter e2 = h2->edge();
+        EdgeIter e3 = h4->edge();
+        EdgeIter e4 = h5->edge();
+
+        FaceIter f0 = h0->face();
+        FaceIter f1 = h3->face();
+
+        VertexIter v4 = newVertex();
+
+        EdgeIter e5 = newEdge();
+        EdgeIter e6 = newEdge();
+        EdgeIter e7 = newEdge();
+
+        HalfedgeIter h10 = newHalfedge();
+        HalfedgeIter h11 = newHalfedge();
+        HalfedgeIter h12 = newHalfedge();
+        HalfedgeIter h13 = newHalfedge();
+        HalfedgeIter h14 = newHalfedge();
+        HalfedgeIter h15 = newHalfedge();
+
+        FaceIter f2 = newFace();
+        FaceIter f3 = newFace();
+
+
+        //new vertex position
+        v4->position = (v1->position - v0->position) + v0->position;
+
+        h0->next() = h1;
+        h0->twin() = h3;
+        h0->edge() = e0;
+        h0->vertex() = v0;
+        h0->face() = f0;
+
+        h1->next() = h2;
+        h1->twin() = h15;
+        h1->edge() = e5;
+        h1->vertex() = v4;
+        h1->face() = f0;
+
+        h2->next() = h0;
+        h2->twin() = h7;
+        h2->edge() = e2;
+        h2->vertex() = v2;
+        h2->face() = f0;
+
+        h3->next() = h4;
+        h3->twin() = h0;
+        h3->edge() = e0;
+        h3->vertex() = v4;
+
+
+    }
     return VertexIter();
   }
 
