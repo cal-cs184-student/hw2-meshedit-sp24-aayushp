@@ -49,7 +49,9 @@
 
 <h2 align="middle">Overview</h2>
 <p>
-   TEXT HERE
+   In this project, I explored a number of techniques in geometric modeling. I began with 1d and 2d models, using de Casteljau's algorithm to evaluate Bezier curves and surfaces.
+    After this I started working with triangle meshes. This required developing a solid understanding of the half edge data structure.
+    This allowed me to develop more nuanced, graduated shading for 3d figures, as well as technique in upsampling to better the resolution of some of these 3d figures.
 </p>
 <br>
 
@@ -343,25 +345,124 @@
   Briefly explain how you implemented the loop subdivision and describe any interesting implementation / debugging tricks you have used.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    I implemented loop subdivision by first iterating through each of the existing vertices, computing each of their new positions as a weighted average of the surrounding vertices.
+    I also made sure to mark these vertices as old vertices. After this I iterate through each of the original edges, and calculate
+    the new position of each new vertex, and stored it in the edge. After this, I loop through each edge in the mesh, splitting them as long as they are not new edges. After the split, we store the new position of the vertex in each new vertex.
+    After this, we iterate through each edge again, flipping the ones that have one vertex that is old and one that is new.
+    We then copy the stored vertex positions to the final positions of each vertex.
+
+    I had to do a good amount of debugging for this task. I found it particularly effective to comment out later loops and run tests
+    to ensure that rudimentary behavior of the code is correct. This allowed me to compartmentalize my debugging efforts to one state at a time.
+    Setting breakpoints and checking the value of the current mesh allowed me to compare the relevant vertices and edges at any given point in the upsampling
+    function, allowing me to notice issues.
+
+    Finally, changing all my integer values to floats resolved an issues where all vertices would be rounded down to 0. This ended up being the last issue I had to debug.
 </p>
 <br>
 
 
 <b>
-  Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
+  Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision.
+    What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
-</p>
+    After mesh subdivision, meshes tend to lose their edges, blending out and losing their definition. These edges become smoother and more curved.
+    Compare the images below.
+
+    Here is what the cube looks like before any upsampling occurs
+    <div align="middle">
+        <img src="images/img_7.png" align="middle" width="50%">
+    </div>
+
+    Here is the cube after repeated subdivision.
+    <div align="middle">
+        <img src="images/img_9.png" align="middle" width="50%">
+    </div>
+
+    At the same time, however, there is a sense in which there is increased definition for "curved" shapes. Notice how the
+    torus, a "round" shape appears to have better definition as more upsampling and mesh subdivision occurs.
+
+    Here is what the torus looks like before any upsampling occurs
+    <div align="middle">
+        <img src="images/img_13.png" align="middle" width="50%">
+    </div>
+
+    Here is what the torus looks like after a few rounds of upsampling. Notice that the smooth edges affords definition to the shape, meaning
+    that there are some instances where our iteration of upsampling is more useful than others
+    <div align="middle">
+        <img src="images/img_14.png" align="middle" width="50%">
+    </div>
+
+    We can try to mitigate the roundedness of these sharper edges by doing some preprocessing. In the image below I have split the edges along the faces of the cube
+    creating many more triangles which constitute them. I have also made sure to not split any of the edges making up the edges of the cube. This means that the edges on the faces are "ahead" of the edges
+    along the cube's edges in terms of granularity, meaning that when I upsample, more of the sharpness of the corners and edges are preserved.
+    <div align="middle">
+        <img src="images/img_15.png" align="middle" width="50%">
+    </div>
+
+    As we can see in the following few images, there is more "sharpness" afforded to the edges. It is important to note that this effect is not necessarily the case for the corners which are still round, so there are tradeoffs to this approach
+    <div align="middle">
+        <img src="images/img_16.png" align="middle" width="50%">
+    </div>
+
+    <div align="middle">
+        <img src="images/img_17.png" align="middle" width="50%">
+    </div>
+
+
+    </p>
 <br>
 
 
 <b>
-  Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
+  Load dae/cube.dae. Perform several iterations of loop subdivision on the cube.
+    Notice that the cube becomes slightly asymmetric after repeated subdivisions.
+    Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically?
+    Document these effects and explain why they occur.
+    Also explain how your pre-processing helps alleviate the effects.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    Here is what the cube looks like without any preprocessing before any upsampling occurs
+    <div align="middle">
+        <img src="images/img_7.png" align="middle" width="50%">
+    </div>
+
+    Here is the first step after the first loops subdivision
+    <div align="middle">
+        <img src="images/img_8.png" align="middle" width="50%">
+    </div>
+
+    As you can see there is already some asymmetry. After repeated subdivisions, it looks like this. Notice that the
+    asymmetry is more pronounced.
+    <div align="middle">
+        <img src="images/img_9.png" align="middle" width="50%">
+    </div>
+
+    In order to resolve this, I perform some pre processing. The screenshot below is before any upsampling. Here I have performed
+    a number of edge splits, one on each face, such that there are four identical triangles on each page arranged symmetrically. Compare this to the
+    old screenshot before upsampling, where the arrangment of triangles means that there are axes along opposite vertices upon which we could split the cube
+    which would not result in symmetrical halves. The same is not true for the arrangement below.
+
+    <div align="middle">
+        <img src="images/img_10.png" align="middle" width="50%">
+    </div>
+
+    Here it is after one iteration of upsampling. You will notice that the figure is more symmetrical.
+    <div align="middle">
+        <img src="images/img_11.png" align="middle" width="50%">
+    </div>
+
+    Here it is after many iterations of upsampling
+    <div align="middle">
+        <img src="images/img_12.png" align="middle" width="50%">
+    </div>
+
+    These effects occur since subsequent splits and flips of triangles will occur in accordance with the initally
+    asymmetrical arrangement of the triangles. Previously, the askew nature of the triangles and the order in which splits occured for triangles resulted in faces
+    with asymmetrical arrangements of triangles. This preprocssing ensures that no such asymmetric arrangments on faces exist anymore, resolving the asymmetry as upsampling continues to occur.
+
+
+
 </p>
 <br>
 
